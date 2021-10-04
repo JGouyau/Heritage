@@ -10,7 +10,17 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            List<Animal> animaux = new List<Animal>{ new Humain(), new Elephant(), new Singe(), new Serpent(), new Tortue(), new Lezard()  };
 
+            foreach (Animal animal in animaux)
+            {
+                animal.Eat();
+                animal.Move();
+                animal.ModeDeGestation();
+            }
+                
+
+            Console.ReadKey();
         }
     }
 
@@ -25,38 +35,67 @@ namespace ConsoleApp1
             this.Name = name;
         }
 
+        public virtual void ModeDeGestation()
+        {
+
+        }
+
         public virtual void Move()
         {
-            
+            Console.WriteLine("L'animal de l'espèce ");
         }
 
         public virtual void Eat()
         {
-
+            Console.WriteLine("Les "+Name+"s mangent par la bouche.");
         }
 
     }
 
-    public class Humain : Animal
+    public abstract class Mammifere : Animal
     {
-        public Humain(string name) : base("humain", 2)
-        { 
+
+        public Mammifere(string name, int nombreDeJambes) : base(name, nombreDeJambes)
+        {
         }
 
-        public override void Eat()
+        public override void ModeDeGestation()
         {
-            Console.WriteLine("L'"+Name+" mange avec des couverts");
+            Console.WriteLine("Les Mammifères sont des vivipares");
         }
 
         public override void Move()
         {
-            Console.WriteLine("L'" + Name + " se deplace en marchant sur "+NombreDeJambes+" jambes");
+            base.Move();
+        }
+
+        public virtual void Eat()
+        {
+            base.Eat();
+        }
+
+    }
+
+    public class Humain : Mammifere
+    {
+        public Humain() : base("Homme", 2)
+        {
+        }
+
+        public override void Eat()
+        {
+            Console.WriteLine("L'" + Name + " mange avec des couverts");
+        }
+
+        public override void Move()
+        {
+            Console.WriteLine("L'" + Name + " se deplace en marchant sur " + NombreDeJambes + " jambes");
         }
     }
 
-    public class Singe : Animal
+    public class Singe : Mammifere
     {
-        public Singe(string name) : base("singe", 4)
+        public Singe() : base("singe", 4)
         {
         }
 
@@ -73,7 +112,7 @@ namespace ConsoleApp1
 
     public class Elephant : Animal
     {
-        public Elephant() : base("éléphant", 2)
+        public Elephant() : base("éléphant", 4)
         {
         }
 
@@ -88,15 +127,17 @@ namespace ConsoleApp1
         }
     }
 
-    public class Tortue : Animal
+
+    public class Reptile : Animal
     {
-        public Tortue(string name) : base("Tortue", 4)
+        public Reptile(string name, int nombreDeJambes) : base(name, nombreDeJambes)
         {
         }
 
-        public override void Eat()
+
+        public override void ModeDeGestation()
         {
-            base.Eat();
+            Console.WriteLine("L'animal "+ Name+ " est un ovipare !!");
         }
 
         public override void Move()
@@ -105,9 +146,21 @@ namespace ConsoleApp1
         }
     }
 
-    public class Lezard : Animal
+    public class Tortue : Reptile
     {
-        public Lezard(string name) : base(name, 2)
+        public Tortue() : base("Tortue", 4)
+        {
+        }
+
+        public override void Eat()
+        {
+            base.Eat();
+        }
+    }
+
+    public class Lezard : Reptile
+    {
+        public Lezard() : base("Lézard", 4)
         {
         }
 
@@ -118,7 +171,24 @@ namespace ConsoleApp1
 
         public override void Move()
         {
-            Console.WriteLine("La " + Name + " se deplace en marchant à " + NombreDeJambes + " pattes ou en nageant");
+            Console.WriteLine("Le " + Name + " se deplace en marchant à " + NombreDeJambes + " pattes ou en nageant");
+        }
+    }
+
+    public class Serpent : Reptile
+    {
+        public Serpent() : base("serpent", 0)
+        {
+        }
+
+        public override void Eat()
+        {
+            base.Eat();
+        }
+
+        public override void Move()
+        {
+            Console.WriteLine("Le " + Name + " se deplace en serpentant qui comme son nom l'indique, à la même racine que le mot serpent");
         }
     }
 }
